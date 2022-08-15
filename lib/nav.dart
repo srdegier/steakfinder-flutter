@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:steak_finder/screens/favorites.dart';
+import 'package:steak_finder/screens/restaurants.dart';
+import 'package:steak_finder/screens/settings.dart';
 
 class Nav extends StatefulWidget {
   const Nav({Key? key}) : super(key: key);
-
-  // const MyWidget({Key? key}) : super(key: key);
 
   @override
   State createState() => _NavState();
@@ -11,10 +12,10 @@ class Nav extends StatefulWidget {
 
 class _NavState extends State<Nav> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
-    const Text('Home'),
-    const Text('Favorites'),
-    const Text('Settings'),
+  final List<Widget> _widgetOptions = <Widget>[
+    const Restaurants(),
+    const Favorites(),
+    const Settings(),
   ];
 
   void _onItemTap(int index) {
@@ -35,8 +36,8 @@ class _NavState extends State<Nav> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.restaurant),
+            label: 'Restaurants',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
