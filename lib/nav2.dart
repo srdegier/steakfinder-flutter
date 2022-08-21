@@ -15,7 +15,7 @@ class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const Restaurants(),
-    // const Favorites(),
+    const Favorites(),
     const Settings(),
   ];
 
@@ -45,10 +45,10 @@ class _NavState extends State<Nav> {
             icon: Icon(Icons.restaurant),
             label: 'Restaurants',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.favorite),
-          //   label: 'Favorites',
-          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorites',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',

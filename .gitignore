@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+.env
 
 # IntelliJ related
 *.iml
@@ -50,5 +51,5 @@ app.*.map.json
 .vscode/
 
 # api key
-/android\app\src\main\AndroidManifest.xml
+/android/app/src/main/AndroidManifest.xml
 /ios/Runner/AppDelegate.swift
