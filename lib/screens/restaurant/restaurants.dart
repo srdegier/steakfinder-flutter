@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:steak_finder/screens/restaurant/favorites.dart';
 import 'package:steak_finder/screens/restaurant/list.dart';
 import 'package:steak_finder/services/steakhouses.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -55,7 +56,10 @@ class _RestaurantsState extends State<Restaurants> {
                 child: const Icon(Icons.favorite),
                 label: 'Favorites',
                 onTap: () {
-                  print('Copy Tapped');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Favorites()),
+                  );
                 }),
             SpeedDialChild(
                 child: const Icon(Icons.list),

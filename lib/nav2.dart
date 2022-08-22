@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:steak_finder/screens/favorites.dart';
+import 'package:steak_finder/screens/restaurant/favorites.dart';
 import 'package:steak_finder/screens/restaurant/restaurants.dart';
 import 'package:steak_finder/screens/settings.dart';
 import 'package:flutter_svg/flutter_svg.dart';
