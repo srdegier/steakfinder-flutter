@@ -58,7 +58,12 @@ class _RestaurantsState extends State<Restaurants> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Favorites()),
+                    MaterialPageRoute(
+                        builder: (context) => Favorites(
+                              focusLocation: (restaurant) {
+                                focusLocation(restaurant);
+                              },
+                            )),
                   );
                 }),
             SpeedDialChild(

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 
 import '../../models/FavoriteSteakhouse.dart';
 import '../../services/databaseHelper.dart';
 
-class Favorites extends StatefulWidget {
-  const Favorites({Key? key}) : super(key: key);
+//Callback.
+typedef IntCallback = void Function(dynamic steakhouseDetails);
 
+class Favorites extends StatefulWidget {
+  const Favorites({Key? key, required this.focusLocation}) : super(key: key);
+  final IntCallback focusLocation;
   @override
   _FavoritesState createState() => _FavoritesState();
 }
@@ -29,37 +33,39 @@ class _FavoritesState extends State<Favorites> {
               }
               return snapshot.data!.isEmpty
                   ? Center(child: Text('No favorites yet!'))
-                  : ListView(
-                      children: snapshot.data!.map((steakhouse) {
-                        return Center(
-                          child: Card(
-                            color: selectedId == steakhouse.placeId
-                                ? Colors.white70
-                                : Colors.white,
-                            child: ListTile(
-                              title: Text(steakhouse.name),
-                              onTap: () {
-                                // setState(() {
-                                //   if (selectedId == null) {
-                                //     textController.text = grocery.name;
-                                //     selectedId = grocery.placeId;
-                                //   } else {
-                                //     textController.text = '';
-                                //     selectedId = null;
-                                //   }
-                                // });
-                              },
-                              onLongPress: () {
-                                setState(() {
-                                  DatabaseHelper.instance
-                                      .remove(steakhouse.placeId!);
-                                });
-                              },
+                  : ListView.builder(
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          child: ListTile(
+                            leading: const Icon(Icons.image),
+                            trailing: Row(
+                              // spacing: 12,
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    widget.focusLocation(snapshot.data![index]);
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.pin_drop),
+                                  iconSize: 30.0,
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        DatabaseHelper.instance.remove(
+                                            snapshot.data![index].placeId);
+                                      });
+                                    },
+                                    icon: const Icon(Icons.delete))
+                              ],
                             ),
+                            title: Text(snapshot.data![index].name),
                           ),
                         );
-                      }).toList(),
-                    );
+                      });
             }),
       ),
     );

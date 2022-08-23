@@ -62,8 +62,8 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         FavoriteSteakhouse(
           placeId: widget.restaurant.placeId,
           name: widget.restaurant.name,
-          lat: widget.restaurant.location['lat'],
-          lng: widget.restaurant.location['lng'],
+          lat: widget.restaurant.lat,
+          lng: widget.restaurant.lng,
         ),
       );
     } else {

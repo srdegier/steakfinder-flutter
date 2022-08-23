@@ -55,7 +55,7 @@ class DatabaseHelper {
     return await db.insert('favorites', favorite.toMap());
   }
 
-  Future<int> remove(String id) async {
+  Future<int> remove(String? id) async {
     inspect('deleting');
     Database db = await instance.database;
     return await db.delete('favorites', where: 'placeId = ?', whereArgs: [id]);

@@ -1,6 +1,7 @@
 // import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -29,19 +30,25 @@ Future fetchSteakhouses() async {
 class Steakhouse {
   final String placeId;
   final String name;
-  final dynamic location;
+  final double lat;
+  final double lng;
+  //final dynamic location;
 
   const Steakhouse({
     required this.placeId,
     required this.name,
-    required this.location,
+    required this.lat,
+    required this.lng,
+    //required this.location,
   });
 
   factory Steakhouse.fromJson(Map<String, dynamic> json) {
     return Steakhouse(
-      placeId: json['place_id'],
-      name: json['name'],
-      location: json['geometry']['location'],
-    );
+        placeId: json['place_id'],
+        name: json['name'],
+        lat: json['geometry']['location']['lat'],
+        lng: json['geometry']['location']['lng']
+        // location: json['geometry']['location'],
+        );
   }
 }

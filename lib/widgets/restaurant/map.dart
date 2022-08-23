@@ -28,13 +28,16 @@ class _MapState extends State<Map> {
 
   @override
   void didUpdateWidget(steakhouseDetails) {
+    inspect(widget.steakhouseDetails);
     if (widget.steakhouseDetails != []) {
       showMarkerInfoWindow(MarkerId(widget.steakhouseDetails.placeId));
       // zoom to location of steakhouse
       mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(
-            target: LatLng(widget.steakhouseDetails.location['lat'],
-                widget.steakhouseDetails.location['lng']),
+            target: LatLng(
+              widget.steakhouseDetails.lat,
+              widget.steakhouseDetails.lng,
+            ),
             zoom: 17),
       ));
     }
@@ -56,8 +59,7 @@ class _MapState extends State<Map> {
       markers.add(
         Marker(
           markerId: MarkerId(restaurant.placeId),
-          position:
-              LatLng(restaurant.location['lat'], restaurant.location['lng']),
+          position: LatLng(restaurant.lat, restaurant.lng),
           infoWindow: InfoWindow(title: restaurant.name),
           onTap: () {
             _restaurantDetail(restaurant);

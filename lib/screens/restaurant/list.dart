@@ -7,7 +7,7 @@ import 'package:steak_finder/models/FavoriteSteakhouse.dart';
 import 'package:steak_finder/services/databaseHelper.dart';
 import 'package:steak_finder/widgets/restaurant/favoriteButton.dart';
 
-// Step 1: Define a Callback.
+//Callback.
 typedef IntCallback = void Function(dynamic steakhouseDetails);
 
 class list extends StatefulWidget {
@@ -41,30 +41,27 @@ class _listState extends State<list> {
             return ListView.builder(
                 itemCount: snapshot.data?.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading: const Icon(Icons.image),
-                    trailing: Row(
-                      // spacing: 12,
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            widget.focusLocation(snapshot.data[index]);
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(Icons.pin_drop),
-                          iconSize: 30.0,
-                        ),
-                        FavoriteButton(restaurant: snapshot.data[index]),
-                        // IconButton(
-                        //   onPressed: () => {inspect('breh')},
-                        //   icon: FavoriteButton(
-                        //       placeId: snapshot.data[index].placeId),
-                        // )
-                      ],
+                  return Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.image),
+                      trailing: Row(
+                        // spacing: 12,
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              widget.focusLocation(snapshot.data[index]);
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.pin_drop),
+                            iconSize: 30.0,
+                          ),
+                          FavoriteButton(restaurant: snapshot.data[index]),
+                        ],
+                      ),
+                      title: Text(snapshot.data[index].name),
                     ),
-                    title: Text(snapshot.data[index].name),
                   );
                 });
           } else if (snapshot.hasError) {
