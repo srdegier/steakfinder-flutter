@@ -15,7 +15,6 @@ class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const Restaurants(),
-    // const Favorites(),
     const Settings(),
   ];
 
@@ -29,12 +28,21 @@ class _NavState extends State<Nav> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Center(
-              child: SvgPicture.asset(
-        'assets/images/SteakFinder.svg',
-        fit: BoxFit.contain,
-        height: 45,
-      ))),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/images/SteakFinder.svg',
+              fit: BoxFit.contain,
+              height: 45,
+            ),
+            Container(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: const Text('Steakhouse finder'))
+          ],
+        ),
+        centerTitle: true,
+      ),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions,
@@ -45,10 +53,6 @@ class _NavState extends State<Nav> {
             icon: Icon(Icons.restaurant),
             label: 'Restaurants',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.favorite),
-          //   label: 'Favorites',
-          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',

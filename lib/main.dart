@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:steak_finder/nav.dart';
-import 'package:steak_finder/services/local_auth.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -16,6 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // luistert naar changes voor theme
     return ValueListenableBuilder<ThemeMode>(
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __) {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(primarySwatch: Colors.red),
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,
-            home: Nav(),
+            home: const Nav(),
           );
         });
   }

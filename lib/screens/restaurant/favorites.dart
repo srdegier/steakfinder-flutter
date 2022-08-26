@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:like_button/like_button.dart';
 
 import '../../models/FavoriteSteakhouse.dart';
 import '../../services/databaseHelper.dart';
@@ -15,8 +14,6 @@ class Favorites extends StatefulWidget {
 }
 
 class _FavoritesState extends State<Favorites> {
-  int? selectedId;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +22,15 @@ class _FavoritesState extends State<Favorites> {
       ),
       body: Center(
         child: FutureBuilder<List<FavoriteSteakhouse>>(
-            future: DatabaseHelper.instance.getFavorites(),
+            future: DatabaseHelper.instance
+                .getFavorites(), // get local saved favorites
             builder: (BuildContext context,
                 AsyncSnapshot<List<FavoriteSteakhouse>> snapshot) {
               if (!snapshot.hasData) {
-                return Center(child: Text('Loading...'));
+                return const Center(child: Text('Loading...'));
               }
               return snapshot.data!.isEmpty
-                  ? Center(child: Text('No favorites yet!'))
+                  ? const Center(child: Text('No favorites yet!'))
                   : ListView.builder(
                       itemCount: snapshot.data?.length,
                       itemBuilder: (BuildContext context, int index) {

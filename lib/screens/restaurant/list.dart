@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/marker.dart';
 import 'package:steak_finder/models/FavoriteSteakhouse.dart';
 import 'package:steak_finder/services/databaseHelper.dart';
 import 'package:steak_finder/widgets/restaurant/favoriteButton.dart';
@@ -10,8 +11,8 @@ import 'package:steak_finder/widgets/restaurant/favoriteButton.dart';
 //Callback.
 typedef IntCallback = void Function(dynamic steakhouseDetails);
 
-class list extends StatefulWidget {
-  const list({
+class List extends StatefulWidget {
+  const List({
     Key? key,
     required this.steakhouses,
     required this.focusLocation,
@@ -22,10 +23,12 @@ class list extends StatefulWidget {
   final IntCallback focusLocation;
 
   @override
-  State<list> createState() => _listState();
+  State<List> createState() => _ListState();
+
+  void add(Marker marker) {}
 }
 
-class _listState extends State<list> {
+class _ListState extends State<List> {
   void likeButtonIsPressed() {}
 
   @override

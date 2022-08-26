@@ -1,17 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:steak_finder/screens/restaurant/list.dart';
 
 class Map extends StatefulWidget {
   const Map(
       {Key? key, required this.steakhouses, required this.steakhouseDetails})
       : super(key: key);
 
-  final List<dynamic> steakhouses;
+  final List steakhouses;
   final dynamic steakhouseDetails;
 
   @override

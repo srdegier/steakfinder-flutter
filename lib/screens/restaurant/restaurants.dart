@@ -1,19 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:steak_finder/screens/restaurant/favorites.dart';
-import 'package:steak_finder/screens/restaurant/list.dart';
+
 import 'package:steak_finder/services/steakhouses.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:steak_finder/widgets/restaurant/floatingButton.dart';
-
 import 'package:steak_finder/widgets/restaurant/map.dart';
-
-import '../../services/local_auth.dart';
-import 'package:local_auth/local_auth.dart';
 
 class Restaurants extends StatefulWidget {
   const Restaurants({super.key});
@@ -23,17 +14,15 @@ class Restaurants extends StatefulWidget {
 }
 
 class _RestaurantsState extends State<Restaurants> {
-  //late Future<dynamic> steakhouses;
-
   dynamic steakhouseDetails = [];
   Stream connectivityStream = Connectivity().onConnectivityChanged;
 
-  late bool bugFix = false;
+  late bool startedOffline = false;
 
   @override
   void initState() {
     super.initState();
-    testFunc();
+    checkStartedWithOffline();
   }
 
   void focusLocation(data) {
@@ -42,12 +31,13 @@ class _RestaurantsState extends State<Restaurants> {
     });
   }
 
-  testFunc() {
+  void checkStartedWithOffline() {
+    // gets current connectivity status
     Connectivity().checkConnectivity().then(
       (value) {
         if (value == ConnectivityResult.none) {
           setState(() {
-            bugFix = true;
+            startedOffline = true;
           });
         }
       },
@@ -56,26 +46,28 @@ class _RestaurantsState extends State<Restaurants> {
 
   @override
   Widget build(BuildContext context) {
+    // determine if the app is offline or online
     return StreamBuilder(
         stream: connectivityStream,
         builder: ((context, snapshot) {
-          if (snapshot.hasData || bugFix) {
+          if (snapshot.hasData || startedOffline) {
             final connectivityResult =
-                bugFix ? ConnectivityResult.none : snapshot.data;
+                startedOffline ? ConnectivityResult.none : snapshot.data;
 
             // The phone has no internet connection
             if (connectivityResult == ConnectivityResult.none) {
-              bugFix = false;
-
+              startedOffline = false;
+              // return without Map() widget. Limited use of app.
               return Scaffold(
-                  body: Center(
+                  body: const Center(
                     child: Text('No internet connection'),
                   ),
                   floatingActionButton: FloatingButton(
-                    noConnection: false,
-                    steakhouses: snapshot.data,
+                    noConnection: false, // the menu only has the favorite list.
+                    steakhouses: const [], // empty list of steakhouses.
                     steakhouseDetails: steakhouseDetails,
                     focusLocation: (restaurant) {
+                      // callback function.
                       focusLocation(restaurant);
                     },
                   ),
@@ -84,18 +76,24 @@ class _RestaurantsState extends State<Restaurants> {
             }
             // The phone has internet connection
             return FutureBuilder(
-                future: fetchSteakhouses(),
+                future:
+                    fetchSteakhouses(), // doing a fetch and await it with Futurebuilder
                 builder: ((context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return Scaffold(
                         body: Map(
-                          steakhouses: snapshot.data,
-                          steakhouseDetails: steakhouseDetails,
+                          steakhouses:
+                              snapshot.data, // list of steakhouses in area.
+                          steakhouseDetails:
+                              steakhouseDetails, // steakhouse detail for map inzoom.
                         ),
                         floatingActionButton: FloatingButton(
-                          noConnection: true,
-                          steakhouses: snapshot.data,
-                          steakhouseDetails: steakhouseDetails,
+                          noConnection:
+                              true, // the menu got all available buttons
+                          steakhouses:
+                              snapshot.data, // list of steakhouses in area.
+                          steakhouseDetails:
+                              steakhouseDetails, // steakhouse detail for map inzoom.
                           focusLocation: (restaurant) {
                             focusLocation(restaurant);
                           },
@@ -106,7 +104,7 @@ class _RestaurantsState extends State<Restaurants> {
                   return const Center(child: CircularProgressIndicator());
                 }));
           }
-          // loading screen if Streambuilder is waiting for result
+          // loading screen if Streambuilder is waiting for changes
           return Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

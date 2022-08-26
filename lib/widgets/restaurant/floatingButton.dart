@@ -14,29 +14,31 @@ import '../../screens/restaurant/list.dart';
 typedef IntCallback = void Function(dynamic steakhouseDetails);
 
 class FloatingButton extends StatefulWidget {
-  FloatingButton({
+  const FloatingButton({
     Key? key,
     required this.steakhouseDetails,
     required this.steakhouses,
     required this.focusLocation,
-    required bool this.noConnection,
+    required this.noConnection,
   }) : super(key: key);
 
   final IntCallback focusLocation;
-  final steakhouses;
-  final steakhouseDetails;
-  final noConnection;
+  final dynamic steakhouses;
+  final dynamic steakhouseDetails;
+  final bool noConnection;
   @override
   State<FloatingButton> createState() => _FloatingButtonState();
 }
 
 class _FloatingButtonState extends State<FloatingButton> {
+  // callback to parent with location detail
   void focusLocation(data) {
     widget.focusLocation(data);
   }
 
   @override
   Widget build(BuildContext context) {
+    // return floating menu button that expands
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
       switchLabelPosition: true,
@@ -50,6 +52,7 @@ class _FloatingButtonState extends State<FloatingButton> {
             child: const Icon(Icons.favorite),
             label: 'Favorites',
             onTap: () async {
+              // bio auth which checks if you authenicated to watch the screen 'favorites'.
               var result = await LocalAuth.authenticate();
               if (result) {
                 // ignore: use_build_context_synchronously
@@ -58,6 +61,7 @@ class _FloatingButtonState extends State<FloatingButton> {
                   MaterialPageRoute(
                       builder: (context) => Favorites(
                             focusLocation: (restaurant) {
+                              // callback function.
                               focusLocation(restaurant);
                             },
                           )),
@@ -72,9 +76,10 @@ class _FloatingButtonState extends State<FloatingButton> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => list(
+                    builder: (context) => List(
                           steakhouses: widget.steakhouses,
                           focusLocation: (restaurant) {
+                            // callback function.
                             focusLocation(restaurant);
                           },
                         )),
