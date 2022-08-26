@@ -5,9 +5,14 @@ class FavoriteSteakhouse {
   final String name;
   final double lat;
   final double lng;
+  final rating;
 
   FavoriteSteakhouse(
-      {this.placeId, required this.name, required this.lat, required this.lng});
+      {this.placeId,
+      required this.name,
+      required this.lat,
+      required this.lng,
+      required this.rating});
 
   factory FavoriteSteakhouse.fromMap(Map<String, dynamic> json) =>
       FavoriteSteakhouse(
@@ -15,6 +20,7 @@ class FavoriteSteakhouse {
         name: json['name'],
         lat: json['lat'],
         lng: json['lng'],
+        rating: json['rating'],
       );
 
   Map<String, dynamic> toMap() {
@@ -23,6 +29,7 @@ class FavoriteSteakhouse {
       'name': name,
       'lat': lat,
       'lng': lng,
+      'rating': rating
     };
   }
 }

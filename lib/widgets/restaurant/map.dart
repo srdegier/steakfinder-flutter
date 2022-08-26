@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class Map extends StatefulWidget {
   const Map(
@@ -18,6 +19,7 @@ class Map extends StatefulWidget {
 class _MapState extends State<Map> {
   late GoogleMapController mapController;
   final LatLng _center = const LatLng(51.91708229074513, 4.483624281079596);
+  Location _location = Location();
 
   @override
   void initState() {
@@ -41,8 +43,19 @@ class _MapState extends State<Map> {
     super.didUpdateWidget(steakhouseDetails);
   }
 
-  void _onMapCreated(GoogleMapController controller) async {
+  // void _onMapCreated(GoogleMapController controller) async {
+  //   mapController = controller;
+  // }
+
+  void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    _location.onLocationChanged.listen((l) {
+      // mapController.animateCamera(
+      //   CameraUpdate.newCameraPosition(
+      //     CameraPosition(target: LatLng(l.latitude!, l.longitude!), zoom: 15),
+      //   ),
+      // );
+    });
   }
 
   showMarkerInfoWindow(MarkerId markerId) {
@@ -67,6 +80,8 @@ class _MapState extends State<Map> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
+      mapType: MapType.normal,
+      myLocationEnabled: true,
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
         target: _center,

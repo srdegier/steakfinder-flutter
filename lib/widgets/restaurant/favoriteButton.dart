@@ -46,6 +46,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           name: widget.restaurant.name,
           lat: widget.restaurant.lat,
           lng: widget.restaurant.lng,
+          rating: widget.restaurant.rating,
         ),
       );
     } else {

@@ -36,7 +36,8 @@ class _FavoritesState extends State<Favorites> {
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
                           child: ListTile(
-                            leading: const Icon(Icons.image),
+                            leading:
+                                Text(snapshot.data![index].rating.toString()),
                             trailing: Row(
                               // spacing: 12,
                               mainAxisSize: MainAxisSize.min,

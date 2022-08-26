@@ -32,7 +32,8 @@ class DatabaseHelper {
           placeId TEXT,
           name TEXT,
           lat DOUBLE,
-          lng DOUBLE
+          lng DOUBLE,
+          rating DOUBLE
       )
       ''');
   }

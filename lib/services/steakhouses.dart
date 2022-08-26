@@ -33,23 +33,24 @@ class Steakhouse {
   final String name;
   final double lat;
   final double lng;
+  final rating;
   //final dynamic location;
 
-  const Steakhouse({
-    required this.placeId,
-    required this.name,
-    required this.lat,
-    required this.lng,
-    //required this.location,
-  });
+  const Steakhouse(
+      {required this.placeId,
+      required this.name,
+      required this.lat,
+      required this.lng,
+      required this.rating
+      //required this.location,
+      });
 
   factory Steakhouse.fromJson(Map<String, dynamic> json) {
     return Steakhouse(
         placeId: json['place_id'],
         name: json['name'],
         lat: json['geometry']['location']['lat'],
-        lng: json['geometry']['location']['lng']
-        // location: json['geometry']['location'],
-        );
+        lng: json['geometry']['location']['lng'],
+        rating: json['rating']);
   }
 }

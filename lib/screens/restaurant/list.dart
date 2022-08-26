@@ -42,7 +42,7 @@ class _ListState extends State<List> {
           itemBuilder: (BuildContext context, int index) {
             return Card(
               child: ListTile(
-                leading: const Icon(Icons.image),
+                leading: Text(widget.steakhouses[index].rating.toString()),
                 trailing: Row(
                   // spacing: 12,
                   mainAxisSize: MainAxisSize.min,
