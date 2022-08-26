@@ -34,42 +34,32 @@ class _listState extends State<list> {
       appBar: AppBar(
         title: const Text('Steakhouses'),
       ),
-      body: FutureBuilder(
-        future: widget.steakhouses,
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.image),
-                      trailing: Row(
-                        // spacing: 12,
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              widget.focusLocation(snapshot.data[index]);
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(Icons.pin_drop),
-                            iconSize: 30.0,
-                          ),
-                          FavoriteButton(restaurant: snapshot.data[index]),
-                        ],
-                      ),
-                      title: Text(snapshot.data[index].name),
+      body: ListView.builder(
+          itemCount: widget.steakhouses.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              child: ListTile(
+                leading: const Icon(Icons.image),
+                trailing: Row(
+                  // spacing: 12,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        widget.focusLocation(widget.steakhouses[index]);
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.pin_drop),
+                      iconSize: 30.0,
                     ),
-                  );
-                });
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
+                    FavoriteButton(restaurant: widget.steakhouses[index]),
+                  ],
+                ),
+                title: Text(widget.steakhouses[index].name),
+              ),
+            );
+          }),
     );
   }
 }

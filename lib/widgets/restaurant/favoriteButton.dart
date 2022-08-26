@@ -31,24 +31,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     return await DatabaseHelper.instance.findById(placeId);
   }
 
-  void addToFavorite(restaurant) {
-    inspect(restaurant.location['lat']);
-    // if not is favorite
-    // if (isFavorite) {
-    //   inspect('toevoegen');
-    //   DatabaseHelper.instance.add(
-    //     FavoriteSteakhouse(
-    //       placeId: restaurant.placeId,
-    //       name: restaurant.name,
-    //       lat: restaurant.location['lat'],
-    //       lng: restaurant.location['lng'],
-    //     ),
-    //   );
-    // } else {
-    //   inspect('Verwijderen');
-    // }
-  }
-
   Future<bool> onLikeButtonTapped(bool isLiked) async {
     /// send your request here
     // final bool success= await sendRequest();
@@ -84,16 +66,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
               isLiked: snapshot.data.isNotEmpty,
               onTap: onLikeButtonTapped,
             );
-            // return IconButton(
-            //   onPressed: () =>
-            //       {addToFavorite(widget.restaurant, snapshot.hasData)},
-            //   icon: Icon(
-            //     snapshot.data.isNotEmpty
-            //         ? Icons.favorite
-            //         : Icons.favorite_border,
-            //     color: snapshot.data.isNotEmpty ? Colors.red : null,
-            //   ),
-            // );
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }

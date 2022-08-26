@@ -14,6 +14,7 @@ Future fetchSteakhouses() async {
     // then parse the JSON.
     final jsonResponse = json.decode(response.body);
     final steakhouses = jsonResponse['results'];
+    inspect(steakhouses);
     //return jsonResponse;
     return steakhouses
         .map(

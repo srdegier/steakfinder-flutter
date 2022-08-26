@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:steak_finder/screens/restaurant/list.dart';
 
 class Map extends StatefulWidget {
   const Map(
       {Key? key, required this.steakhouses, required this.steakhouseDetails})
       : super(key: key);
 
-  final Future steakhouses;
+  final List<dynamic> steakhouses;
   final dynamic steakhouseDetails;
 
   @override
@@ -28,7 +29,6 @@ class _MapState extends State<Map> {
 
   @override
   void didUpdateWidget(steakhouseDetails) {
-    inspect(widget.steakhouseDetails);
     if (widget.steakhouseDetails != []) {
       showMarkerInfoWindow(MarkerId(widget.steakhouseDetails.placeId));
       // zoom to location of steakhouse
@@ -61,41 +61,23 @@ class _MapState extends State<Map> {
           markerId: MarkerId(restaurant.placeId),
           position: LatLng(restaurant.lat, restaurant.lng),
           infoWindow: InfoWindow(title: restaurant.name),
-          onTap: () {
-            _restaurantDetail(restaurant);
-            // showMarkerInfoWindow(const MarkerId('ChIJa1H5JQkzxEcRf_XgrBpbj5Q'));
-          },
         ),
       );
     }
     return Set<Marker>.of(markers);
   }
 
-  _restaurantDetail(restaurant) {
-    // inspect('???');
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: widget.steakhouses,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 13.0,
-            ),
-            markers: _mapPins(
-              snapshot.data,
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-        return const Center(child: CircularProgressIndicator());
-      },
+    return GoogleMap(
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: CameraPosition(
+        target: _center,
+        zoom: 13.0,
+      ),
+      markers: _mapPins(
+        widget.steakhouses,
+      ),
     );
   }
 }
